@@ -20,14 +20,16 @@ body {
     border: 1px solid #6f212f;
 }
 
-/*.photo { 
-  height: 20vw;
-    background-image: url(https://pasteboard.co/I5iqx5I.jpg);
-    background-repeat: no-repeat; 
-    background-position: center;
-    background-size: contain;
+.photo { 
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
 }
-*/
+
+.button{
+    background-color:darkseagreen;  
+}
 
 h1 { 
   height: 80px;
