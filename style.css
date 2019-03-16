@@ -1,0 +1,60 @@
+/* Styles go here */
+@import url('https://fonts.googleapis.com/css?family=Barlow|Muli|Nunito|Roboto+Mono');
+
+*:focus {
+    outline: none;
+}
+
+body { 
+  background-color: #4375c6; 
+  color: #000000; font-family: 'roboto+mono', mono;
+
+}
+
+#wrapper {
+    width:300px;
+    margin:20px auto;
+    padding:20px;
+    border-radius: 5px 5px 0 0;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.3), 0 0 5px rgba(0, 0, 0, .3);
+    border: 1px solid #6f212f;
+}
+
+/*.photo { 
+  height: 20vw;
+    background-image: url(https://pasteboard.co/I5iqx5I.jpg);
+    background-repeat: no-repeat; 
+    background-position: center;
+    background-size: contain;
+}
+*/
+
+h1 { 
+  height: 80px;
+  text-align: center; font-family: 'Roboto Mono', monospace; 
+  margin-top: auto;
+  font-size: 26px
+    }
+
+h2 { font-family: 'Muli', sans-serif; font-size: 14px; margin-top: auto; }
+
+
+input[type=checkbox] {
+    vertical-align:middle;
+    margin: 0 5px;
+}
+
+
+li {
+    list-style: none;
+    background: #fff;
+    margin:5px 0px;
+    line-height:1.6;
+    padding:10px;
+    border:#222 solid 1px;
+}
+
+li:nth-child(odd) {
+    background: #ccc;
+}
+
