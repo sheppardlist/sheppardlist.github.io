@@ -1,18 +1,19 @@
 // Jason Sheppard
 // Spring 2019
 // Web233 Javascript
-// Date: 3/15/19
-// Shopping List
+// Date: 3/22/19
+// Shopping List Version 4.0
 
 // Code JavaScript
 
-//v4.0 Add popup describing app when visitors load webpage the first time
-window.onload = function() {
-    alert("Welcome to 'Shopping List' App!\n\nCreated by Rock Valley College\n**Javascript(Web233) Students**\n\nQuestions?\nemail Professor Chuck Konkol\nc.konkol@rockvalleycollege.edu\n\nRegister @ RockValleyCollege.edu");
-    populateshoppinglistonload();
-    displayShoppinglists();
-    clearFocus();
+var MyItems = {
+  name:""
 };
+
+var shoppinglist = [];
+
+//v 3.1 addtocart empty array
+var addtocart = [];
 
 //v 4.0 save cookie
 //v 4.0 read cookie on load and display
@@ -73,32 +74,10 @@ function readCookie(name) {
     return null;
 }
 
-//v 4.0 save cookie
-function savecookie()
-{
-  delete_cookie('sheppardlist'); //replace konkol with YOUR last name
-   var date = new Date();
-   //keeps for a year
-    date.setTime(date.getTime() + Number(365) * 3600 * 1000);
-  //replace konkol with YOUR last name
-   document.cookie = 'sheppardlist' + "=" + escape(shoppinglist.join(',')) + "; path=/;expires = " + date.toGMTString();
-}
-
 //v 4.0 delete cookie
 function delete_cookie(name) {
   document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
-
-
-var MyItems = {
-  name:"",
-  price:""
-};
-
-var shoppinglist = [];
-
-//v 3.1 addtocart empty array
-var addtocart = [];
 
 
 //v3.1
@@ -114,8 +93,6 @@ function changeShoppinglist(position) {
   shoppinglist[position] = eitem + "," + '$' + ecost;
   displayShoppinglists();
   displayShoppingCart();
-  //v 4.0 save cookie
-    savecookie();
 }
 
 //v3.1
@@ -131,8 +108,6 @@ function changeShoppingCart(position) {
   addtocart[position] = eitem + "," + '$' + ecost;
   displayShoppinglists();
   displayShoppingCart();
-  //v 4.0 save cookie
-    savecookie();
 }
 
 //v3.1 
@@ -145,13 +120,10 @@ function addbacktoshoppinglist(item,num) {
 //v3.1 display displayShoppingCart() 
   displayShoppingCart(); 
   clearFocus();
-  //v 4.0 save cookie
-    savecookie();
 }
 
 //v 3.1 Update function addShoppinglist by adding objects
 function addtoshopcart(item, num) {
-    document.getElementById("sharelist").innerHTML = ' ';
     deleteShoppinglists(num);
     addtocart.push(item);
   //display shoppinglist
@@ -160,43 +132,47 @@ function addtoshopcart(item, num) {
   displayShoppingCart(); 
   //Clear
   clearFocus();
-    //v 4.0 save cookie
-    savecookie();
 }
 
 //v 3.1 Update function addShoppinglist by adding objects
 function addShoppinglist(item) {
   //v 3.0 declare variable for groc string
+  var groc="";
+  //v 3.0 v 3.0 declare variable for loop count
+  var count=0;
+  //v 3.0 edit value for MyItems.name
+  MyItems.name=item;
+  //v 3.0 for loop through object propterties and 
+  for (var x in MyItems){
+    if (count===1){
+      groc += "$";
+    }
+    //add to groc string from object array item
+    groc += MyItems[x];
+    if (count===0){
+      groc += "|";
+    }
+    //increment count by 1
+   count++;
+  }
   //push to shoppinglist
-  if (item != "")
-  {
-  document.getElementById("sharelist").innerHTML = ' ';
-  shoppinglist.push(item);
+  shoppinglist.push(groc);
   //display shoppinglist
   displayShoppinglists();
 //v3.1 display displayShoppingCart() 
   displayShoppingCart(); 
   clearFocus();
-  //v 4.0 save cookie
-  savecookie();
-  }else
-  {
-  alert("Item Description Required: Please enter now :)");
-  clearFocus();
-  }
 }
 
 function clearFocus()
 {
   document.getElementById("item").value = "";
-  // document.getElementById("cost").value = "";
   document.getElementById("item").focus();
 }
 
 
 //v 3.1: update function displayShoppinglists() to add to cart 
 function displayShoppinglists() {
-document.getElementById("MyList").innerHTML = '';
 var TheList = "";
 var TheRow = "";
 var arrayLength = shoppinglist.length;
@@ -207,7 +183,7 @@ var btnupdate =  ' <input class="button" name="edit" type="button" value="Edit I
 //v 3.1 add edit button using below i index & name it btnpdate
 var arrays = shoppinglist[i];
 arrays = "'"+arrays+"'";
-var btnaddcart =  '<input name="add" type="checkbox" id="adds" value="Add to Shopping Cart" onclick="addtoshopcart('+arrays+','+ i +')" />';
+var btnaddcart =  '<label><input name="add" type="checkbox" id="adds" value="Add to Shopping Cart" onclick="addtoshopcart('+arrays+','+ i +')" />Add</label>';
 TheRow = '<li>' + shoppinglist[i] + btndelete + ' '  + btnaddcart + '</li>';
 TheList += TheRow;
 }
@@ -220,6 +196,19 @@ if (arrayLength > 0)
   document.getElementById("MyList").innerHTML = '';
 }
 }
+
+//v 4.0 save cookie
+function savecookie()
+{
+  delete_cookie('sheppardlist'); //replace konkol with YOUR last name
+   var date = new Date();
+   //keeps for a year
+    date.setTime(date.getTime() + Number(365) * 3600 * 1000);
+  //replace konkol with YOUR last name
+   document.cookie = 'sheppardlist' + "=" + escape(shoppinglist.join(',')) + "; path=/;expires = " + date.toGMTString();
+}
+
+
 
 //v3.1
 function displayShoppingCart() {
@@ -234,7 +223,7 @@ var btnupdate =  ' <input class="button" name="edit" type="button" value="Edit I
 var arrays = addtocart[i];
 arrays = "'"+arrays+"'";
 //v 3.1 add edit button using below i index & name it btnpdate
-var btnaddlist =  '<input name="add" type="checkbox" id="adds" value="Add to Shopping List" onclick="addbacktoshoppinglist('+arrays+',' + i + ')" checked="checked"/>';
+var btnaddlist =  '<label><input name="add" type="checkbox" id="adds" value="Add to Shopping List" onclick="addbacktoshoppinglist('+arrays+',' + i + ')" checked="checked"/>Add</label>';
 TheRow =  "<li>" + addtocart[i] + btndelete + ' ' +  ' ' + btnaddlist + '<br></li>';
 TheList += TheRow;
 }

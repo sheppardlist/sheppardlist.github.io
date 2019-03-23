@@ -20,16 +20,15 @@ body {
     border: 1px solid #6f212f;
 }
 
-.photo { 
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+.photo {
   width: 100%;
+  height: 300px;
+  background-image: url('nanners.jpg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: 1px solid black;
 }
 
-.button{
-    background-color:darkseagreen;  
-}
 
 h1 { 
   height: 80px;
