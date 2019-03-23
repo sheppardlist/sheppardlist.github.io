@@ -13,22 +13,23 @@
 
   <body>
     <div id ="wrapper">
-      
+
     <div class=photo>
     </div>
-    
-    <h1>Shopping List Version 4.0</h1>
-    
-    <form>    
+
+    <h1>Shopping List</h1>
+
+    <form>
       <h2>Item</h2>
-      <input type="text" id="item" name="item" /><br><br>
-      <input class="button" name="submit" type="button" value="Add Item" onclick="addShoppinglist(item.value)" />
+      <input type="text" id="item" name="item" onkeydown = "if (event.keyCode == 13)
+                              document.getElementById('btnSubmit').click()"/>
+      <input class="button" id="btnSubmit" name="submit" type="button" value="+Add" onclick="addShoppinglist(item.value)" /><br>
       <p id="MyList"></p>
-      <p id="MyCart"></p>   
+      <p id="MyCart"></p>
     </form>
 
     </div>
-    
+
   </body>
 
 </html>

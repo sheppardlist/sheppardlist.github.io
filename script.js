@@ -2,18 +2,18 @@
 // Spring 2019
 // Web233 Javascript
 // Date: 3/22/19
-// Shopping List Version 4.0
+// Shopping List
 
 // Code JavaScript
 
-var MyItems = {
-  name:""
+
+//v4.0 Add popup describing app when visitors load webpage the first time
+window.onload = function() {
+    alert("Welcome to 'Shopping List' App!");
+    populateshoppinglistonload();
+    displayShoppinglists();
+    clearFocus();
 };
-
-var shoppinglist = [];
-
-//v 3.1 addtocart empty array
-var addtocart = [];
 
 //v 4.0 save cookie
 //v 4.0 read cookie on load and display
@@ -21,46 +21,6 @@ window.onload = function() {
   populateshoppinglistonload();
    displayShoppinglists();
 };
-
-//v 4.0 populateshoppinglistonload()
-function populateshoppinglistonload()
-{
-  shoppinglist = [];
-  addtocart = [];
-  //load cookie into array
-  var y = readCookie('sheppardlist'); //replace konkol with YOUR last name
-  //remove unwanted chars and format
-  y = remove_unwanted(y); 
-  //spit array by comma %2C
-  y = y.split('%2C');
-  if (y) {
-    shoppinglist = y;
-   }
-}
-
-//v. 4.0remove and format cookie
-function remove_unwanted(str) {  
-    
-  if ((str===null) || (str===''))  
-       return false;  
- else  
-   str = str.toString();  
-   str = str.replace(/%20/g, "");
-   str = str.replace(/%24/g, "$"); 
-   str = str.replace(/%7C/g, " | ");
-  return str.replace(/[^\x20-\x7E]/g, '');  
-}  
-
-
-//v 4.0 save cookie
-function savecookie()
-{
-  delete_cookie('sheppardlist');
-   var date = new Date();
-   //keeps for a year
-    date.setTime(date.getTime() + Number(365) * 3600 * 1000);
-   document.cookie = 'sheppardlist' + "=" + escape(shoppinglist.join(',')) + "; path=/;expires = " + date.toGMTString();
-}
 
 //v 4.0 read cookie and return
 function readCookie(name) {
@@ -74,11 +34,63 @@ function readCookie(name) {
     return null;
 }
 
+//v. 4.0remove and format cookie
+function remove_unwanted(str) {
+
+  if ((str===null) || (str===''))
+       return false;
+ else
+   str = str.toString();
+    //clean space
+   str = str.replace(/%20/g, " ");
+    //clean !
+    str = str.replace(/%21/g, "!");
+   str = str.replace(/%24/g, "$");
+   str = str.replace(/%7C/g, " | ");
+  return str.replace(/[^\x20-\x7E]/g, '');
+}
+
+
+//v 4.0 save cookie
+function savecookie()
+{
+  delete_cookie('sheppardlist');
+   var date = new Date();
+   //keeps for a year
+    date.setTime(date.getTime() + Number(365) * 3600 * 1000);
+   document.cookie = 'sheppardlist' + "=" + escape(shoppinglist.join(',')) + "; path=/;expires = " + date.toGMTString();
+}
+
 //v 4.0 delete cookie
 function delete_cookie(name) {
   document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 
+//v 4.0 populateshoppinglistonload()
+function populateshoppinglistonload()
+{
+  shoppinglist = [];
+  addtocart = [];
+  //load cookie into array
+  var y = readCookie('sheppardlist'); //replace konkol with YOUR last name
+  //remove unwanted chars and format
+  y = remove_unwanted(y);
+  //spit array by comma %2C
+  y = y.split('%2C');
+  if (y) {
+    shoppinglist = y;
+   }
+}
+
+var MyItems = {
+  name:"",
+  price:""
+};
+
+var shoppinglist = [];
+
+//v 3.1 addtocart empty array
+var addtocart = [];
 
 //v3.1
 function changeShoppinglist(position) {
@@ -93,6 +105,8 @@ function changeShoppinglist(position) {
   shoppinglist[position] = eitem + "," + '$' + ecost;
   displayShoppinglists();
   displayShoppingCart();
+  //v 4.0 save cookie
+savecookie();
 }
 
 //v3.1
@@ -108,18 +122,22 @@ function changeShoppingCart(position) {
   addtocart[position] = eitem + "," + '$' + ecost;
   displayShoppinglists();
   displayShoppingCart();
+  //v 4.0 save cookie
+savecookie();
 }
 
-//v3.1 
+//v3.1
 function addbacktoshoppinglist(item,num) {
   //push to deleteShoppingCar
    deleteShoppingCart(num);
   shoppinglist.push(item);
   //display shoppinglist
   displayShoppinglists();
-//v3.1 display displayShoppingCart() 
-  displayShoppingCart(); 
+//v3.1 display displayShoppingCart()
+  displayShoppingCart();
   clearFocus();
+  //v 4.0 save cookie
+savecookie();
 }
 
 //v 3.1 Update function addShoppinglist by adding objects
@@ -128,40 +146,33 @@ function addtoshopcart(item, num) {
     addtocart.push(item);
   //display shoppinglist
   displayShoppinglists();
-//v3.1 display displayShoppingCart() 
-  displayShoppingCart(); 
+//v3.1 display displayShoppingCart()
+  displayShoppingCart();
   //Clear
   clearFocus();
+  //v 4.0 save cookie
+savecookie();
 }
 
 //v 3.1 Update function addShoppinglist by adding objects
 function addShoppinglist(item) {
   //v 3.0 declare variable for groc string
-  var groc="";
-  //v 3.0 v 3.0 declare variable for loop count
-  var count=0;
-  //v 3.0 edit value for MyItems.name
-  MyItems.name=item;
-  //v 3.0 for loop through object propterties and 
-  for (var x in MyItems){
-    if (count===1){
-      groc += "$";
-    }
-    //add to groc string from object array item
-    groc += MyItems[x];
-    if (count===0){
-      groc += "|";
-    }
-    //increment count by 1
-   count++;
-  }
   //push to shoppinglist
-  shoppinglist.push(groc);
+  if (item != "")
+  {
+  shoppinglist.push(item);
   //display shoppinglist
   displayShoppinglists();
-//v3.1 display displayShoppingCart() 
-  displayShoppingCart(); 
+//v3.1 display displayShoppingCart()
+  displayShoppingCart();
   clearFocus();
+  //v 4.0 save cookie
+  savecookie();
+  }else
+  {
+  alert("Item Description Required: Please enter now :)");
+  clearFocus();
+  }
 }
 
 function clearFocus()
@@ -171,8 +182,9 @@ function clearFocus()
 }
 
 
-//v 3.1: update function displayShoppinglists() to add to cart 
+//v 3.1: update function displayShoppinglists() to add to cart
 function displayShoppinglists() {
+document.getElementById("MyList").innerHTML = '';
 var TheList = "";
 var TheRow = "";
 var arrayLength = shoppinglist.length;
