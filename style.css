@@ -5,8 +5,8 @@
     outline: none;
 }
 
-body { 
-  background-color: #4375c6; 
+body {
+  background-color: #4375c6;
   color: #000000; font-family: 'roboto+mono', mono;
 
 }
@@ -30,14 +30,18 @@ body {
 }
 
 
-h1 { 
+h1 {
   height: 80px;
-  text-align: center; font-family: 'Roboto Mono', monospace; 
+  text-align: center;
+  font-family: 'Roboto Mono', monospace;
   margin-top: auto;
   font-size: 26px
     }
 
-h2 { font-family: 'Muli', sans-serif; font-size: 14px; margin-top: auto; }
+h2 { font-family: 'Muli',
+sans-serif;
+font-size: 14px;
+margin-top: auto; }
 
 
 input[type=checkbox] {
@@ -59,3 +63,13 @@ li:nth-child(odd) {
     background: #ccc;
 }
 
+.footer{
+  text-align: center; font-family: 'Roboto Mono', monospace;
+}
+
+.left{
+  float: left;
+}
+.right{
+  float:right;
+}

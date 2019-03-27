@@ -6,6 +6,37 @@
 
 // Code JavaScript
 
+//v4.1 get values via URL
+function get(name){
+    var url = window.location.search;
+    var num = url.search(name);
+    var namel = name.length;
+    var frontlength = namel+num+1; //length of everything before the value
+    var front = url.substring(0, frontlength);
+    url = url.replace(front, "");
+    num = url.search("&");
+    if(num>=0) return url.substr(0,num);
+    if(num<0)  return url;
+}
+
+//4.1 Share
+function passlist()
+{
+   var long_url = "https://sheppardlist.github.io/index.html?list="+ shoppinglist;
+   document.getElementById("sharelist").innerHTML = 'Share URL:\n' + long_url;
+   copyToClipboard(long_url);
+}
+
+// Share function
+function share()
+{
+   passlist();
+}
+
+//v4.1 prompt message to copy URL
+function copyToClipboard(text) {
+   window.prompt("Copy & Share List!", text);
+}
 
 //v4.0 Add popup describing app when visitors load webpage the first time
 window.onload = function() {
@@ -15,12 +46,11 @@ window.onload = function() {
     clearFocus();
 };
 
-//v 4.0 save cookie
-//v 4.0 read cookie on load and display
-window.onload = function() {
-  populateshoppinglistonload();
-   displayShoppinglists();
-};
+function about()
+{
+    alert("Welcome to 'Shopping List' App!\n\nThis app allows a user to add items to, and remove from, a list.\n");
+
+}
 
 //v 4.0 read cookie and return
 function readCookie(name) {
@@ -44,7 +74,7 @@ function remove_unwanted(str) {
     //clean space
    str = str.replace(/%20/g, " ");
     //clean !
-    str = str.replace(/%21/g, "!");
+   str = str.replace(/%21/g, "!");
    str = str.replace(/%24/g, "$");
    str = str.replace(/%7C/g, " | ");
   return str.replace(/[^\x20-\x7E]/g, '');
@@ -76,8 +106,13 @@ function populateshoppinglistonload()
   //remove unwanted chars and format
   y = remove_unwanted(y);
   //spit array by comma %2C
-  y = y.split('%2C');
-  if (y) {
+  // v4.1 get URL
+  var geturllistvalue = get('list');
+  if (geturllistvalue){
+    geturllistvalue = geturllistvalue.split(',');
+    shoppinglist = geturllistvalue;
+  } else if (y){
+    y = y.split('%2C');
     shoppinglist = y;
    }
 }
@@ -97,7 +132,7 @@ function changeShoppinglist(position) {
   //document.getElementById("MyList").innerHTML = shoppinglist[position];
   var arrays = shoppinglist[position];
   arrays = arrays.split(",");
-    var e1 = arrays[0];
+   var e1 = arrays[0];
    var e2 = arrays[1];
  var ReplacedAmount = e2.replace(/\$/g,'');
   var eitem = prompt("Please enter new item", e1);
@@ -114,7 +149,7 @@ function changeShoppingCart(position) {
   document.getElementById("MyCart").innerHTML = shoppinglist[position];
   var arrays = addtocart[position];
   arrays = arrays.split(",");
-    var e1 = arrays[0];
+   var e1 = arrays[0];
    var e2 = arrays[1];
  var ReplacedAmount = e2.replace(/\$/g,'');
   var eitem = prompt("Please enter new item", e1);
@@ -196,6 +231,7 @@ var btnupdate =  ' <input class="button" name="edit" type="button" value="Edit I
 var arrays = shoppinglist[i];
 arrays = "'"+arrays+"'";
 var btnaddcart =  '<label><input name="add" type="checkbox" id="adds" value="Add to Shopping Cart" onclick="addtoshopcart('+arrays+','+ i +')" />Add</label>';
+var btnsharelist = '<input class="button" id="shares" name="shares" type="submit" value="Share Shopping List" onclick="share()" />'
 TheRow = '<li>' + shoppinglist[i] + btndelete + ' '  + btnaddcart + '</li>';
 TheList += TheRow;
 }
@@ -203,9 +239,11 @@ TheList += TheRow;
 if (arrayLength > 0)
 {
   document.getElementById("MyList").innerHTML = '<ul>' + TheList + '</ul>';
-}else
-{
+  document.getElementById("sharebutton").innerHTML = btnsharelist;
+}else{
   document.getElementById("MyList").innerHTML = '';
+  //document.getElementById("sharebutton").innerHTML = ' ';
+  document.getElementById("sharelist").innerHTML = ' ';
 }
 }
 

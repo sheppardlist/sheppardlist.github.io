@@ -22,11 +22,24 @@
     <form>
       <h2>Item</h2>
       <input type="text" id="item" name="item" onkeydown = "if (event.keyCode == 13)
-                              document.getElementById('btnSubmit').click()"/>
+                document.getElementById('btnSubmit').click()"/>
       <input class="button" id="btnSubmit" name="submit" type="button" value="+Add" onclick="addShoppinglist(item.value)" /><br>
       <p id="MyList"></p>
       <p id="MyCart"></p>
     </form>
+
+    <br>
+
+    <div class ="left"><input class="button" id="about" name="submit" type="submit" value="about" onclick="about()" />
+    </div>
+
+    <div class ="right"><input class="button" id="share" name="submit" type="submit" value="share" onclick="share()" />
+    </div>
+    <br>
+    <p id ="sharelist"></p>
+    <br>
+    <div class="footer"><p>RVC WEB 233 JavaScript Project</p>
+    </div>
 
     </div>
 
