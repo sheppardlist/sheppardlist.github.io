@@ -3,24 +3,29 @@
 
   <head>
     <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <title>The Band Bucket List</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="RVCList" content="Add to Home">
+    <meta name="description" content="A place to List bands you want to see, then check them off your bucket list.">
+    <meta name="author" content="Jason Sheppard">
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
   </head>
 
   <body>
+    <script src="script.js"></script>
     <div id ="wrapper">
 
     <div class=photo>
     </div>
 
-    <h1>Shopping List</h1>
+    <h1>The Band Bucket List</h1>
 
     <form>
-      <h2>Item</h2>
+      <h2>Enter A Band:</h2>
       <input type="text" id="item" name="item" onkeydown = "if (event.keyCode == 13)
                 document.getElementById('btnSubmit').click()"/>
       <input class="button" id="btnSubmit" name="submit" type="button" value="+Add" onclick="addShoppinglist(item.value)" /><br>
@@ -38,7 +43,7 @@
     <br>
     <p id ="sharelist"></p>
     <br>
-    <div class="footer"><p>RVC WEB 233 JavaScript Project</p>
+    <div class="footer"><p>This is an RVC WEB 233 Student JavaScript Final Project</p>
     </div>
 
     </div>

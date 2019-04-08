@@ -1,13 +1,17 @@
 /* Styles go here */
 @import url('https://fonts.googleapis.com/css?family=Barlow|Muli|Nunito|Roboto+Mono');
+@import url('https://fonts.googleapis.com/css?family=Bangers|Dokdo|Frijole|Neucha|Rock+Salt|Trade+Winds');
+
+
 
 *:focus {
     outline: none;
 }
 
 body {
-  background-color: #4375c6;
-  color: #000000; font-family: 'roboto+mono', mono;
+  background-color: black;
+  color: white;
+  font-family: 'Trade Winds', cursive;
 
 }
 
@@ -22,8 +26,8 @@ body {
 
 .photo {
   width: 100%;
-  height: 300px;
-  background-image: url('nanners.jpg');
+  height: 225px;
+  background-image: url('Head.jpg');
   background-repeat: no-repeat;
   background-size: contain;
   border: 1px solid black;
@@ -33,15 +37,18 @@ body {
 h1 {
   height: 80px;
   text-align: center;
-  font-family: 'Roboto Mono', monospace;
+  font-family: 'Rock Salt', cursive;
   margin-top: auto;
-  font-size: 26px
-    }
+  font-size: 30px;
+  padding-bottom: 40px;
+  color: Red;
+  }
 
-h2 { font-family: 'Muli',
-sans-serif;
-font-size: 14px;
-margin-top: auto; }
+h2 { font-family: 'Neucha', cursive;
+font-size: 16px;
+margin-top: auto;
+color: white;
+ }
 
 
 input[type=checkbox] {
@@ -52,7 +59,7 @@ input[type=checkbox] {
 
 li {
     list-style: none;
-    background: #fff;
+    background: #303742;
     margin:5px 0px;
     line-height:1.6;
     padding:10px;
@@ -60,11 +67,13 @@ li {
 }
 
 li:nth-child(odd) {
-    background: #ccc;
+    background: #232f42;
 }
 
 .footer{
-  text-align: center; font-family: 'Roboto Mono', monospace;
+  text-align: center;
+  font-family: 'Bangers', cursive;
+  color: red;
 }
 
 .left{

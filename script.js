@@ -1,8 +1,8 @@
 // Jason Sheppard
 // Spring 2019
 // Web233 Javascript
-// Date: 3/22/19
-// Shopping List
+// Date: 4/7/19
+// Band Bucket List
 
 // Code JavaScript
 
@@ -20,11 +20,44 @@ function get(name){
 }
 
 //4.1 Share
+//function passlist()
+//{
+//   var long_url = "https://sheppardlist.github.io/index.html?list="+ shoppinglist;
+//   document.getElementById("sharelist").innerHTML = 'Share URL:\n' + long_url;
+//   copyToClipboard(long_url);
+//}
+
+//vFinal ShareList via bitly api
 function passlist()
 {
+   var getshorturl=0;
+   var login = "jsheppard13";
+   var api_key = "R_5aea5c786fef4d1bae9d5ac61629b07d";
    var long_url = "https://sheppardlist.github.io/index.html?list="+ shoppinglist;
-   document.getElementById("sharelist").innerHTML = 'Share URL:\n' + long_url;
-   copyToClipboard(long_url);
+  try{
+  $.getJSON(
+             "https://api-ssl.bitly.com/v3/shorten?callback=?",
+              {
+             "format": "json",
+              "apiKey": api_key,
+             "login": login,
+              "longUrl": long_url
+              },
+             function(response)
+             {
+                getshorturl = 1;
+                document.getElementById("sharelist").innerHTML = 'Share List:' + response.data.url;
+                copyToClipboard(response.data.url);
+                // copyToClipboard('sharelist');
+                 //alert("ShoppingList URL Copied");
+             });
+  } catch(err) {
+   //alert("Error : "+ err);
+    document.getElementById("sharelist").innerHTML = 'Share List:\n' + long_url;
+    //copyToClipboard("sharelist");
+    copyToClipboard(long_url);
+    //alert("ShoppingList URL Copied");
+}
 }
 
 // Share function
@@ -40,7 +73,7 @@ function copyToClipboard(text) {
 
 //v4.0 Add popup describing app when visitors load webpage the first time
 window.onload = function() {
-    alert("Welcome to 'Shopping List' App!");
+    alert("Welcome to 'The Band Bucket List' App!");
     populateshoppinglistonload();
     displayShoppinglists();
     clearFocus();
@@ -48,7 +81,7 @@ window.onload = function() {
 
 function about()
 {
-    alert("Welcome to 'Shopping List' App!\n\nThis app allows a user to add items to, and remove from, a list.\n");
+    alert("Welcome to 'The Band Bucket List' App!\n\nThis app allows a user to add bands to see to, and remove from, a list.\n");
 
 }
 
@@ -106,6 +139,7 @@ function populateshoppinglistonload()
   //remove unwanted chars and format
   y = remove_unwanted(y);
   //spit array by comma %2C
+  
   // v4.1 get URL
   var geturllistvalue = get('list');
   if (geturllistvalue){
@@ -135,7 +169,7 @@ function changeShoppinglist(position) {
    var e1 = arrays[0];
    var e2 = arrays[1];
  var ReplacedAmount = e2.replace(/\$/g,'');
-  var eitem = prompt("Please enter new item", e1);
+  var eitem = prompt("Please enter new band", e1);
   var ecost = prompt("Please enter your name", ReplacedAmount);
   shoppinglist[position] = eitem + "," + '$' + ecost;
   displayShoppinglists();
@@ -152,7 +186,7 @@ function changeShoppingCart(position) {
    var e1 = arrays[0];
    var e2 = arrays[1];
  var ReplacedAmount = e2.replace(/\$/g,'');
-  var eitem = prompt("Please enter new item", e1);
+  var eitem = prompt("Please enter new band", e1);
   var ecost = prompt("Please enter your name", ReplacedAmount);
   addtocart[position] = eitem + "," + '$' + ecost;
   displayShoppinglists();
@@ -225,12 +259,12 @@ var TheRow = "";
 var arrayLength = shoppinglist.length;
 for (var i = 0; i < shoppinglist.length; i++) {
   //v 3.1 change button name to btndelete
-var btndelete =  ' <input class="button" id="remove" name="delete" type="button" value="Remove Item" onclick="deleteShoppinglists(' + i + ')" />';
+var btndelete =  ' <input class="button" id="remove" name="delete" type="button" value="Remove" onclick="deleteShoppinglists(' + i + ')" />';
 var btnupdate =  ' <input class="button" name="edit" type="button" value="Edit Item" onclick="changeShoppinglist(' + i + ')" />';
 //v 3.1 add edit button using below i index & name it btnpdate
 var arrays = shoppinglist[i];
 arrays = "'"+arrays+"'";
-var btnaddcart =  '<label><input name="add" type="checkbox" id="adds" value="Add to Shopping Cart" onclick="addtoshopcart('+arrays+','+ i +')" />Add</label>';
+var btnaddcart =  '<label><input name="add" type="checkbox" id="adds" value="Add to Shopping Cart" onclick="addtoshopcart('+arrays+','+ i +')" />Seen It!!</label>';
 var btnsharelist = '<input class="button" id="shares" name="shares" type="submit" value="Share Shopping List" onclick="share()" />'
 TheRow = '<li>' + shoppinglist[i] + btndelete + ' '  + btnaddcart + '</li>';
 TheList += TheRow;
@@ -242,7 +276,7 @@ if (arrayLength > 0)
   document.getElementById("sharebutton").innerHTML = btnsharelist;
 }else{
   document.getElementById("MyList").innerHTML = '';
-  //document.getElementById("sharebutton").innerHTML = ' ';
+  //document.getElementById("sharebutton").innerHTML = ' ';// This breaks my app for some reason.
   document.getElementById("sharelist").innerHTML = ' ';
 }
 }
@@ -267,19 +301,19 @@ var TheRow = "";
 var arrayLength = addtocart.length;
 for (var i = 0; i < arrayLength; i++) {
   //v 3.1 change button name to btndelete
-var btndelete =  ' <input class="button" id="remove" name="delete" type="button" value="Remove Item" onclick="deleteShoppingCart(' + i + ')" />';
+var btndelete =  ' <input class="button" id="remove" name="delete" type="button" value="Remove" onclick="deleteShoppingCart(' + i + ')" />';
 //v 3.1 add edit button using below i index & name it btnpdate
 var btnupdate =  ' <input class="button" name="edit" type="button" value="Edit Item" onclick="changeShoppingCart(' + i + ')" />';
 var arrays = addtocart[i];
 arrays = "'"+arrays+"'";
 //v 3.1 add edit button using below i index & name it btnpdate
-var btnaddlist =  '<label><input name="add" type="checkbox" id="adds" value="Add to Shopping List" onclick="addbacktoshoppinglist('+arrays+',' + i + ')" checked="checked"/>Add</label>';
+var btnaddlist =  '<label><input name="add" type="checkbox" id="adds" value="Add to Shopping List" onclick="addbacktoshoppinglist('+arrays+',' + i + ')" checked="checked"/>Seen It!!!</label>';
 TheRow =  "<li>" + addtocart[i] + btndelete + ' ' +  ' ' + btnaddlist + '<br></li>';
 TheList += TheRow;
 }
 if (arrayLength > 0)
 {
-  document.getElementById("MyCart").innerHTML = 'Shopping Cart ' + '<br><ul>' + TheList + '</ul>';
+  document.getElementById("MyCart").innerHTML = 'Checked Off the Bucket List!' + '<br><ul>' + TheList + '</ul>';
 }else{
   document.getElementById("MyCart").innerHTML = '';
 }
